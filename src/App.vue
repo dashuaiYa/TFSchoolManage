@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <el-container>
-      <el-header>header</el-header>
+      <el-header>
+        <span>{{schoolName}}</span>
+        <el-button type="text" size="small" @click="signOut">退出登录</el-button>
+      </el-header>
       <el-container>
         <el-aside width="220px">
           <el-menu :default-active="activeNav" @open="handleOpen" @close="handleClose" router>
@@ -51,6 +54,25 @@
                 <span slot="title">班级列表</span>
               </el-menu-item>
             </el-submenu>
+            <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>设备管理</span>
+              </template>
+              <el-menu-item index="/devices_add" route="/devices_add">
+                <i class="el-icon-setting"></i>
+                <span slot="title">添加设备</span>
+              </el-menu-item>
+              <el-menu-item index="/devices" route="/devices">
+                <i class="el-icon-setting"></i>
+                <span slot="title">设备列表</span>
+              </el-menu-item>
+            </el-submenu>
+
+            <el-menu-item index="/download" route="/download">
+              <i class="el-icon-setting"></i>
+              <span slot="title">课件下载</span>
+            </el-menu-item>
             <!-- <el-submenu index="4">
               <template slot="title">
                 <i class="el-icon-location"></i>
@@ -83,6 +105,7 @@
 export default {
   data(){
     return {
+      schoolName: sessionStorage.getItem('schoolName'),
       activeNav: this.$route.path
     }
   },
@@ -93,6 +116,13 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    signOut: function() {
+      this.$http.get('/schoolManager/logout.json').then(response => {
+        if (response.body.code == 200) {
+          this.$router.push({ path: "/login" });
+        }
+      }, response => {})
     }
   }
 };
@@ -110,6 +140,16 @@ export default {
 body {
   margin: 0;
   padding: 0;
+}
+.el-header {
+  line-height: 60px;
+  text-align: center;
+  border-bottom: 1px solid #999;
+}
+.el-header .el-button {
+  float: right;
+  position: relative;
+  top: 15px;
 }
 .el-breadcrumb {
   margin-bottom: 25px;

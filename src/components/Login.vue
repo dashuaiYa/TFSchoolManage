@@ -29,6 +29,9 @@ export default {
         if(body.code == 200) {
             this.userName = '';
             this.userPwd = '';
+            // this.$store.commit('userStatus', body.detail.schoolName);
+            sessionStorage.setItem('schoolName', body.detail.schoolName);
+            sessionStorage.setItem('schoolId', body.detail.schoolId);
             this.$router.push({ path: this.$route.query.redirect ? this.$route.query.redirect : '/'});
         }
       }, response => {})

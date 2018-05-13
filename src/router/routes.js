@@ -4,6 +4,7 @@ import Login from '../components/Login'
 
 import StudentList from '../components/student/Student'
 import StudentAdd from '../components/student/Student-add'
+import StudentEdit from '../components/student/Student-edit'
 
 import Teacher from '../components/teacher/Teacher'
 import TeacherAdd from '../components/teacher/Teacher-add'
@@ -13,6 +14,10 @@ import Class from '../components/class/Class'
 import ClassAdd from '../components/class/Class-add'
 
 import Grade from '../components/grade/Grade'
+
+import Devices from '../components/devices/Devices'
+import DevicesAdd from '../components/devices/Devices-add'
+import DevicesEdit from '../components/devices/Devices-edit'
 
 // import Classroom from '../components/classroom/Classroom'
 
@@ -39,6 +44,14 @@ export default [
     path: '/student_add',
     name: 'StudentAdd',
     component: StudentAdd,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/student_edit',
+    name: 'StudentEdit',
+    component: StudentEdit,
     meta: {
       requireAuth: true
     }
@@ -87,6 +100,30 @@ export default [
     path: '/class_add',
     name: 'ClassAdd',
     component: ClassAdd,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/devices',
+    name: 'Devices',
+    component: Devices,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/devices_add',
+    name: 'DevicesAdd',
+    component: DevicesAdd,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/devices_edit',
+    name: 'DevicesEdit',
+    component: DevicesEdit,
     meta: {
       requireAuth: true
     }

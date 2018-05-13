@@ -53,6 +53,7 @@
         width="50">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="stuEdit(scope.row)">编辑</el-button>
+          <!-- <router-link :to="{name: 'StudentEdit', params: {id: }}"></router-link> -->
         </template>
       </el-table-column>
     </el-table>
@@ -103,8 +104,9 @@ export default {
     handleClick(row) {
       console.log(row);
     },
-    stuEdit(row) {
-      console.log(row);
+    stuEdit: function(row) {
+      console.log(row.id);
+      this.$router.push({name: 'StudentEdit', query: {sid: row.id}})
     }
   }
 }

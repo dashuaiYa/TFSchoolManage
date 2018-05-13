@@ -3,7 +3,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>学生管理</el-breadcrumb-item>
-      <el-breadcrumb-item>编辑学生</el-breadcrumb-item>
+      <el-breadcrumb-item>修改学生信息</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-col :span="18">
@@ -26,7 +26,7 @@
         <el-form-item label="家庭住址">
           <el-input type="text" v-model="address" placeholder="请输入内容" required></el-input>
         </el-form-item>
-        <el-form-item label="排课班级">
+        <el-form-item label="所在班级">
           <el-select v-model="classId" placeholder="筛选年级">
             <el-option
               v-for="item in options"
@@ -43,7 +43,7 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="性别">
+        <el-form-item label="状态">
           <el-select v-model="status">
             <el-option label="正常" value="1"></el-option>
             <el-option label="删除" value="2"></el-option>
@@ -69,7 +69,8 @@ export default {
       classId: '',
       options: [],
       status: '',
-      entranceTime: ''
+      entranceTime: '',
+      sid: ''
     }
   },
   mounted: function() {
@@ -79,11 +80,26 @@ export default {
         this.options = body.detail.rows;
       }
     }, response => {})
+    this.sid = this.$route.query.sid;
+    this.$http.get('/schoolManager/stu/stuInfo?stuId=' + this.sid).then(response => {
+      const body = response.body;
+      if(body.code == 200) {
+        this.stuName = body.detail.stuName;
+        this.gender = body.detail.gender;
+        this.age = body.detail.age;
+        this.phone = body.detail.phone;
+        this.address = body.detail.address;
+        this.status = body.detail.status;
+        this.classId = body.detail.classId;
+        this.entranceTime = body.detail.entranceTime;
+      }
+    }, response => {})
   },
   methods: {
     onSubmit: function() {
-      const query = '/schoolManager/stu/addStuInfo.json';
+      const query = '/schoolManager/stu/editStuInfo.json';
       const param = {
+        stuId: this.sid,
         stuName: this.stuName,
         gender: this.gender,
         age: this.age,
