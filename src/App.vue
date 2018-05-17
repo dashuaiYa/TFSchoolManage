@@ -2,8 +2,7 @@
   <div id="app">
     <el-container>
       <el-header>
-        <span>{{schoolName}}</span>
-        <el-button type="text" size="small" @click="signOut">退出登录</el-button>
+        <header-view></header-view>
       </el-header>
       <el-container>
         <el-aside width="220px">
@@ -102,10 +101,13 @@
 </template>
 
 <script>
+
+import Header from './components/Header'
+
 export default {
   data(){
     return {
-      schoolName: sessionStorage.getItem('schoolName'),
+      schoolName: this.$store.state.user.schoolName,
       activeNav: this.$route.path
     }
   },
@@ -116,14 +118,10 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    },
-    signOut: function() {
-      this.$http.get('/schoolManager/logout.json').then(response => {
-        if (response.body.code == 200) {
-          this.$router.push({ path: "/login" });
-        }
-      }, response => {})
     }
+  },
+  components: {
+    "header-view": Header
   }
 };
 </script>
@@ -145,11 +143,6 @@ body {
   line-height: 60px;
   text-align: center;
   border-bottom: 1px solid #999;
-}
-.el-header .el-button {
-  float: right;
-  position: relative;
-  top: 15px;
 }
 .el-breadcrumb {
   margin-bottom: 25px;

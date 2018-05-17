@@ -19,6 +19,8 @@ import Devices from '../components/devices/Devices'
 import DevicesAdd from '../components/devices/Devices-add'
 import DevicesEdit from '../components/devices/Devices-edit'
 
+import Download from '../components/download/Download'
+
 // import Classroom from '../components/classroom/Classroom'
 
 // import Notice from '../components/notice/Notice'
@@ -124,6 +126,14 @@ export default [
     path: '/devices_edit',
     name: 'DevicesEdit',
     component: DevicesEdit,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/download',
+    name: 'Download',
+    component: Download,
     meta: {
       requireAuth: true
     }
