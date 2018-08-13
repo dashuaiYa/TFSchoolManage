@@ -10,7 +10,7 @@
       border
       style="width: 100%">
       <el-table-column
-        prop="deviceName"
+        prop="name"
         label="课件名称">
       </el-table-column>
       <el-table-column
@@ -18,8 +18,8 @@
         label="操作"
         width="80">
         <template slot-scope="scope">
-          <!-- <el-button type="text" size="small" @click="delDevice(scope.row)">删除</el-button> -->
-          <el-button type="text" size="small" @click="downloadFile(scope.row)">下载</el-button>
+          <!-- <el-button type="text" size="small" @click="delDevice(scope.row)">下载</el-button> -->
+          <a :href="scope.row.url" :download="scope.row.name">下载</a>
         </template>
       </el-table-column>
     </el-table>
@@ -33,8 +33,15 @@ export default {
       tableData: []
     }
   },
+  mounted: function(){
+      this.$http.get('/cccourse').then(response => {
+          this.tableData = response.body;
+      }, response => {});
+  },
   methods: {
-    downloadFile: function(row) {}
+    delDevice: function(scope) {
+      console.log(scope);
+    }
   }
 }
 </script>
